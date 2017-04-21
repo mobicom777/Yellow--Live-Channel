@@ -1,5 +1,6 @@
 var myOptions = {
 	"nativeControlsForTouch": false,
+	"logo": { "enabled": false },
 	controls: true,
 	autoplay: true,
 	width: "640",
