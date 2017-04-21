@@ -8,7 +8,7 @@ var myOptions = {
 myPlayer = amp("azuremediaplayer", myOptions);
 myPlayer.src([
         {
-                "src": "http://hectagonmedia.streaming.mediaservices.windows.net/31767238-2d11-4c29-bc7c-17476b38e4eb/d2f1ff1a-f877-4e9d-99c6-a8b271582a5c.ism/manifest",
+                "src": "//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest",
                 "type": "application/vnd.ms-sstr+xml"
         }
 ]);
