@@ -9,5 +9,5 @@ var myOptions = {
 myPlayer = amp("azuremediaplayer", myOptions);
 
 myPlayer.src([
-    { src: "http://mobicom.streaming.mediaservices.windows.net/15fa66fe-250d-4f69-8be3-85f37f7e4942/c228dc66-4ae9-432c-ad8d-60a465b10c37.ism/manifest", type: "application/vnd.ms-sstr+xml", streamingFormats: ["SMOOTH", "HLS","HLS-V3", "HLS-V4"]}, 
+    { src: "http://mobicom.streaming.mediaservices.windows.net/3d30369e-0658-4ff5-a79c-3659cde656a1/Kal Ho Naa Ho - Title Track Video  Shahrukh Khan, Saif, Preity.ism/manifest", type: "application/vnd.ms-sstr+xml", streamingFormats: ["SMOOTH", "HLS","HLS-V3", "HLS-V4"]}, 
 ]);
