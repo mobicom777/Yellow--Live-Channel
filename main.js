@@ -3,8 +3,8 @@ var myOptions = {
 	"logo": { "enabled": false },
 	controls: true,
 	autoplay: true,
-	width: "auto",
-	height: "auto",
+	width: "640",
+	height: "400",
 }
 myPlayer = amp("azuremediaplayer", myOptions);
 
