@@ -1,6 +1,7 @@
 
 	var myOptions = {
 		"nativeControlsForTouch": false,
+		techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS","silverlightSS", "html5"],
 		"logo": { "enabled": false },
 		controls: true,
 		autoplay: true,
