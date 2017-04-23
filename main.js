@@ -9,5 +9,5 @@ var myOptions = {
 myPlayer = amp("azuremediaplayer", myOptions);
 
 myPlayer.src([
-    { src: "//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest", type: "application/vnd.ms-sstr+xml", streamingFormats: ["SMOOTH", "HLS","HLS-V3", "HLS-V4"]}, 
+    { src: "http://mobicom.streaming.mediaservices.windows.net/058fe846-0937-4f8d-89eb-fb43511d20d8/Sri Lanka - by drone 2017 - 4K.ism/manifest", type: "application/vnd.ms-sstr+xml", streamingFormats: ["SMOOTH", "HLS","HLS-V3", "HLS-V4"]}, 
 ]);
