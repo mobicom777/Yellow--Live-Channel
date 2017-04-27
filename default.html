@@ -1,24 +1,196 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AMP Content Title</title>
-        <meta name="description" content="Azure Media Player Content Title plugin">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-                
-                        <link href="//amp.azure.net/libs/amp/1.8.3/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
-                        <script src="//amp.azure.net/libs/amp/1.8.3/azuremediaplayer.min.js"></script>
-        <link href="amp-titleOverlay.css" rel="stylesheet">
-        <script src="amp-titleOverlay.js"></script>
-                
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AMP Playlist</title>
+    <meta name="description" content="Azure Media Player Diagnostics Logger plugin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://amp.azure.net/libs/amp/latest/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+    <script src="http://amp.azure.net/libs/amp/1.7.1/azuremediaplayer.min.js"></script>
+    <script src="dist/amp-playlists.js"></script>
+    
+    <!--CUSTOMIZED STYLES-->
+    <style>
+      body{
+        padding: 0;
+        margin: 0;
+        background: #eeeeee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      ul{
+        list-style: none;
+        text-align: left;
+      }
+      ul > li{
+        padding: 10px;
+        margin: 5px;
+        border:1px solid #dddddd;
+      }
+      ul > li > a{
+        padding: 10px;
+      }
+      .container{
+        padding: 10px;
+        width:960px;
+        margin: 0 auto;
+        background: white;
+      }
+      h1,h2,h3,h4,h5,h6{
+        text-align: center;
+      }
+      
+      #video-container{
+        width:640px;
+        text-align: center;
+        margin: 0 auto;
+      }
+      button{
+        cursor: pointer;
+            display: inline-flex;
+      }
+      i{
+        cursor: pointer;
+        font-size: 31px;
+        display: inline-block;
+        line-height: 11px;
+        vertical-align: middle;
+        color: #969696;
+        font-style: normal;
+        margin: 0 5px;
+      }
+
+    </style>
 </head>
 
 <body>
-        <h1>MobicomTv Test Transmission</h1>
+  <div class="container">
+    <h1>AMP Playlist Example</h1>
+    <div id="video-container">
         <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" controls autoplay width="640"
-           height="400" poster="" data-setup='{ "nativeControlsForTouch": false, "logo": { "enabled": false }, "plugins": { "contentTitle": { "name": "Mobicom Test Transmission", "horizontalPosition": "left", "verticalPosition": "center" } } }'
-               tabindex="0"></video>
-        <script type="text/javascript" src="/main.js"></script>
+              height="400" tabindex="0">
+        </video>
+        <h3>Playlist</h3>
+        <button id="prev"><i>&blacktriangleleft;</i> Prev</button>
+        <button id="next"><i>&blacktriangleright;</i> Next</button>
+        <button id="stop"><i>&blacksquare;</i> Stop</button>
+        <ul id="playlistContainer"></ul>
+    </div>
+    </div>
+    <script>
+      (function(){
+          // DOM References
+          var prev          = document.getElementById("prev");
+          var next          = document.getElementById("next");
+          var stop          = document.getElementById("stop");
+          var listElm       = document.getElementById("playlistContainer");
+          var playlistLinks = document.getElementsByTagName("a");
+
+          // Init playlistItems
+            var playlistItems = [
+            {
+              src : [
+                //'http://stream.flowplayer.org/bauhaus/624x260.webm',
+                'http://mobicom.streaming.mediaservices.windows.net/3deb667b-f210-40fb-abdf-64a2bb04404e/Sri Lanka - SRI LANKAN DREAMS - Fresh Start Media - 4K.ism/manifest',
+                //'http://stream.flowplayer.org/bauhaus/624x260.ogv'
+              ],
+              poster : 'http://flowplayer.org/media/img/demos/minimalist.jpg',
+              title : 'Video 1'
+            },
+            {
+              src : [
+                //'http://stream.flowplayer.org/night3/640x360.webm',
+                'http://mobicom.streaming.mediaservices.windows.net/900a3e1b-f403-4042-9c5d-c238049c9444/Best Places to Visit in Sri Lanka, GoPlaces Sri Lanka  8 Wonders.ism/manifest',
+                //'http://stream.flowplayer.org/night3/640x360.ogv'
+              ],
+              poster : 'http://flowplayer.org/media/img/demos/playlist/railway_station.jpg',
+              title : 'Video 2'
+            },
+            {
+              src : [
+                //'http://stream.flowplayer.org/night3/640x360.webm',
+                'http://mobicom.streaming.mediaservices.windows.net/81a420aa-9da0-443f-abc0-699231d716e6/Janam Janam Lyrics - Dilwale.ism/manifest',
+                //'http://stream.flowplayer.org/night3/640x360.ogv'
+              ],
+              poster : 'http://flowplayer.org/media/img/demos/playlist/railway_station.jpg',
+              title : 'Video 2 - Start from 00:00:30',
+              timeRange:{
+                start:30,
+                end:40
+              }
+            },        
+            {
+              src : [
+                //'http://stream.flowplayer.org/functional/624x260.webm',
+                "http://mobicom.streaming.mediaservices.windows.net/3d30369e-0658-4ff5-a79c-3659cde656a1/Kal Ho Naa Ho - Title Track Video  Shahrukh Khan, Saif, Preity.ism/manifest",
+                //'http://stream.flowplayer.org/functional/624x260.ogv'
+              ],
+              poster : 'http://flowplayer.org/media/img/demos/functional.jpg',
+              title : 'Video 3'
+            }
+          ];
+
+          
+          function playItem(item){
+            var index = item.getAttribute("data-index");
+            console.log("playing item: ", index);
+            player.playlist(index);
+          }
+          
+          for(var i=0;i<playlistItems.length;i++){
+            
+            var li = document.createElement("li");
+            var link = document.createElement("a");
+            var img = document.createElement("img");
+            
+            link.text = playlistItems[i].title;
+            link.setAttribute("href","#");
+            link.setAttribute("data-index",i);
+            img.setAttribute("width", 80);
+            img.setAttribute("height", 45);
+            img.setAttribute("alt", "Image Thumb");
+            img.setAttribute("src", playlistItems[i].poster);
+            li.appendChild(img);
+            li.appendChild(link);
+            playlistContainer.appendChild(li);
+          }
+          
+          var options = {
+              autoplay: true,
+              controls: true,
+              width: "640",
+              height: "400",
+              poster: ""
+          };
+
+            var player = amp("azuremediaplayer", options);
+            player.playlist(playlistItems); 
+            
+          for(var i=0; i<playlistLinks.length; i++){
+            playlistLinks[i].addEventListener("click", function(e){
+              e.preventDefault();
+              playItem(this);
+            })
+          }
+          
+          prev.addEventListener("click", function(){
+            player.prev();
+          });
+          
+          next.addEventListener("click", function(){
+            player.next();
+          });
+          
+          stop.addEventListener("click", function(){
+            player.stop();
+          });
+      }());
+    </script>
+
+    <footer>
+    </footer>
 </body>
+
 </html>
+
